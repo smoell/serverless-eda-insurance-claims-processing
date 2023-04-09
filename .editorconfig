@@ -27,3 +27,7 @@ tab_width = 2
 
 [{*.har,*.jsb2,*.jsb3,*.json,.babelrc,.eslintrc,.prettierrc,.stylelintrc,bowerrc,jest.config}]
 indent_size = 2
+
+[Makefile]
+indent_size = 2
+tab_width = 2
