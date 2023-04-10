@@ -100,6 +100,7 @@ export class ClaimsProcessingStack extends Stack {
       customerTableName: customerTable.tableName,
       policyTableName: policyTable.tableName,
       claimsTableName: claimsTable.tableName,
+      settlementTableName: settlementService.table.tableName,
       documentsBucketName: documentService.documentsBucket.bucketName,
     });
 
@@ -109,6 +110,7 @@ export class ClaimsProcessingStack extends Stack {
     documentService.documentsBucket.grantReadWrite(
       cleanupService.cleanupLambdaFunction
     );
+    settlementService.table.grantReadWriteData(cleanupService.cleanupLambdaFunction);
 
     const metricsQueueWithLambdaSubscription =
       createMetricsQueueWithLambdaSubscription(this);

@@ -31,6 +31,7 @@ interface SettlementServiceProps {
 }
 
 export class SettlementService extends Construct {
+  public readonly table: dynamodb.Table;
   public readonly settlementMetricsWidget: GraphWidget;
 
   constructor(scope: Construct, id: string, props: SettlementServiceProps) {
@@ -44,7 +45,7 @@ export class SettlementService extends Construct {
       vpc: vpc
     });
 
-    const table = new dynamodb.Table(this, props.settlementTableName, {
+    this.table = new dynamodb.Table(this, props.settlementTableName, {
       partitionKey: {name: "Id", type: dynamodb.AttributeType.STRING,},
       tableName: props.settlementTableName,
       readCapacity: 5,
@@ -98,7 +99,7 @@ export class SettlementService extends Construct {
         listenerPort: 8080
       });
 
-    table.grantReadWriteData(loadBalancedFargateService.taskDefinition.taskRole);
+    this.table.grantReadWriteData(loadBalancedFargateService.taskDefinition.taskRole);
     props.bus.grantPutEventsTo(loadBalancedFargateService.taskDefinition.taskRole);
     queue.grantConsumeMessages(loadBalancedFargateService.taskDefinition.taskRole);
 
