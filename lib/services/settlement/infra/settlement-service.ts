@@ -10,14 +10,15 @@ import {
   Duration,
   RemovalPolicy
 } from 'aws-cdk-lib';
-import {Construct} from 'constructs';
-import {EventBus} from "aws-cdk-lib/aws-events";
-import {EventbridgeToSqs, EventbridgeToSqsProps} from "@aws-solutions-constructs/aws-eventbridge-sqs";
-import {createGraphWidget, createMetric} from "../../../observability/cw-dashboard/infra/ClaimsProcessingCWDashboard";
-import {GraphWidget} from "aws-cdk-lib/aws-cloudwatch";
-import {RetentionDays} from "aws-cdk-lib/aws-logs";
+import { Construct } from 'constructs';
+import { EventBus } from "aws-cdk-lib/aws-events";
+import { EventbridgeToSqs, EventbridgeToSqsProps } from "@aws-solutions-constructs/aws-eventbridge-sqs";
+import { createGraphWidget, createMetric } from "../../../observability/cw-dashboard/infra/ClaimsProcessingCWDashboard";
+import { GraphWidget } from "aws-cdk-lib/aws-cloudwatch";
+import { RetentionDays } from "aws-cdk-lib/aws-logs";
+import { FraudEvents } from "../../fraud/infra/fraud-events";
 
-export interface SettlementServiceProps {
+interface SettlementServiceProps {
   readonly bus: EventBus,
   readonly settlementImageName: string;
   readonly settlementTableName: string;
@@ -50,12 +51,12 @@ export class SettlementService extends Construct {
       existingEventBusInterface: props.bus,
       eventRuleProps: {
         eventPattern: {
-          source: ["fraud.service"],
+          source: [FraudEvents.SOURCE],
           detail: {
             documentType: ["CAR"],
             fraudType: ["CLAIMS"]
           },
-          detailType: ['Fraud.Not.Detected'],
+          detailType: [FraudEvents.FRAUD_NOT_DETECTED],
         }
       },
       queueProps: {

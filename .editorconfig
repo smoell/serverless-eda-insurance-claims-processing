@@ -16,6 +16,7 @@ tab_width = 2
 [*.ts]
 indent_size = 2
 tab_width = 2
+ij_typescript_spaces_within_imports = true
 
 [{*.ant,*.fxml,*.jhm,*.jnlp,*.jrxml,*.pom,*.rng,*.tld,*.wadl,*.wsdl,*.xml,*.xsd,*.xsl,*.xslt,*.xul}]
 indent_size = 2
