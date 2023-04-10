@@ -18,6 +18,11 @@ import { GraphWidget } from "aws-cdk-lib/aws-cloudwatch";
 import { RetentionDays } from "aws-cdk-lib/aws-logs";
 import { FraudEvents } from "../../fraud/infra/fraud-events";
 
+export enum SettlementEvents {
+  SOURCE = "settlement.service",
+  SETTLEMENT_FINALIZED = "Settlement.Finalized",
+}
+
 interface SettlementServiceProps {
   readonly bus: EventBus,
   readonly settlementImageName: string;

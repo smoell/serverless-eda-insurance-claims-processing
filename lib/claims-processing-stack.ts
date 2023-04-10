@@ -18,7 +18,7 @@ import { DocumentService } from "./services/documents/infra/documents-service";
 import { FraudEvents } from "./services/fraud/infra/fraud-events";
 import { FraudService } from "./services/fraud/infra/fraud-service";
 import { NotificationsService } from "./services/notifications/infra/notifications-service";
-import { SettlementService } from "./services/settlement/infra/settlement-service";
+import { SettlementEvents, SettlementService } from "./services/settlement/infra/settlement-service";
 import { CfnDiscoverer } from "aws-cdk-lib/aws-eventschemas";
 
 export class ClaimsProcessingStack extends Stack {
@@ -77,7 +77,7 @@ export class ClaimsProcessingStack extends Stack {
           ClaimsEvents.CLAIM_REJECTED,
           DocumentsEvents.DOCUMENT_PROCESSED,
           FraudEvents.FRAUD_DETECTED,
-          "Settlement.Finalized"
+          SettlementEvents.SETTLEMENT_FINALIZED
         ],
       },
     });
@@ -124,7 +124,7 @@ export class ClaimsProcessingStack extends Stack {
           ClaimsEvents.CLAIMS_SOURCE,
           DocumentsEvents.SOURCE,
           FraudEvents.SOURCE,
-          "settlement.service",
+          SettlementEvents.SOURCE,
           "aws.s3",
         ],
       },
